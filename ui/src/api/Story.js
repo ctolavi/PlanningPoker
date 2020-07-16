@@ -6,13 +6,4 @@ export default {
     return Promise.resolve(stories);
   },
 
-  save(story) {
-    let storySaved = {
-      id: stories.length + 1,
-      name: story.value,
-    }
-    stories.push(storySaved);
-    return Promise.resolve(storySaved);
-  }
-
 }

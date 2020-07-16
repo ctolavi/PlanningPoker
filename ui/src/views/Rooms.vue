@@ -28,7 +28,7 @@
       </v-col>
     </v-row>
     <v-dialog max-width="400px" persistent v-model="createRoomDialog">
-      <create-room @closed="createRoomDialog=false"></create-room>
+      <create-room @closed="roomCreated"></create-room>
     </v-dialog>
   </div>
 </template>
@@ -47,11 +47,20 @@
       }
     },
     mounted() {
-      Room.get().then(
-        rooms => {
-          this.rooms = rooms;
-        }
-      );
+      this.loadRooms();
+    },
+    methods: {
+      roomCreated() {
+        this.loadRooms();
+        this.createRoomDialog = false;
+      },
+      loadRooms() {
+        Room.get().then(
+          rooms => {
+            this.rooms = rooms;
+          }
+        );
+      }
     }
   }
 </script>

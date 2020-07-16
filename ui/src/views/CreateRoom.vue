@@ -23,7 +23,8 @@
 </template>
 
 <script>
-  import Room from "../api/Room";
+  import User from "../api/User";
+  import {mapState} from "vuex";
 
   export default {
     name: "CreateRoom",
@@ -32,15 +33,19 @@
         name: null,
       }
     },
+    computed: mapState([
+      'user',
+    ]),
     methods: {
       close() {
         this.$emit('closed', false);
       },
       save() {
+        console.log(this.user);
         let room = {
           name: this.name,
         }
-        Room.save(room).then(
+        User.saveRoomByUser(this.user.id, room).then(
           response => {
             this.name = null;
             this.$emit('closed', false);

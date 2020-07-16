@@ -33,6 +33,7 @@
 
 <script>
   import User from "../api/User";
+  import {mapMutations} from "vuex";
 
   export default {
     name: "User",
@@ -42,10 +43,14 @@
       }
     },
     methods: {
+      ...mapMutations([
+        'setUser',
+      ]),
       login() {
         let user = {name: this.user};
-        User.login(user).then(
+        User.save(user).then(
           user => {
+            this.setUser(user);
             this.$router.push({name: "Rooms"})
           }
         );

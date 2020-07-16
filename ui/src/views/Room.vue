@@ -78,8 +78,7 @@
 
 <script>
   import Room from "../api/Room";
-  import Player from "../api/Player";
-  import Story from "../api/Story";
+  import User from "../api/User";
 
   export default {
     name: "Room",
@@ -95,15 +94,17 @@
       }
     },
     mounted() {
+      //TODO actualizar el get by id
       Room.get(this.id).then(
         room => {
           this.room = room;
-          return Player.get(this.id);
+          //TODO sacar los usuarios de un room
+          return User.get(this.id);
         }
       ).then(
         players => {
           this.players = players;
-          return Story.get(this.id);
+          return Room.getStoryByRoom(this.id);
         }
       ).then(
         stories => {
@@ -121,11 +122,16 @@
       },
       saveStory() {
         let story = {
-          value: this.storyName,
+          name: this.storyName,
         };
-        Story.save(story).then(
+        Room.saveStoryByRoom(this.id, story).then(
           storySaved => {
             this.storyName = null;
+            return Room.getStoryByRoom(this.id);
+          }
+        ).then(
+          stories => {
+            this.stories = stories;
           }
         );
       },
