@@ -1,5 +1,6 @@
 package io.github.ctolavi.planningpoker;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,5 +18,10 @@ public class BeanConfig {
 //                .andRoute(DELETE("/users/userId").and(accept(APPLICATION_JSON)), userHandler :: deleteUser)
 //                .andRoute(GET("/users/events/stream").and(accept(APPLICATION_JSON)), userHandler :: streamEvents);
 //    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
 }
